@@ -2,8 +2,8 @@
 
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\user\UserController;
+use App\Http\Controllers\admin\AdminController;
 
 
 
@@ -12,7 +12,7 @@ Route::get('/login', [AuthController::class, 'index'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
 
 // Logout
-Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
+Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 
 Route::middleware(['auth', 'roleCheck:user'])->group(function () {
     Route::get('/dashboardUser', [UserController::class, 'index'])->name('dashboard.user');
