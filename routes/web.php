@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\user\UserController;
 use App\Http\Controllers\admin\AdminController;
+use App\Http\Controllers\admin\KelolaUserController;
 
 
 
@@ -20,4 +21,10 @@ Route::middleware(['auth', 'roleCheck:user'])->group(function () {
 
 Route::middleware(['auth', 'roleCheck:admin'])->group(function () {
     Route::get('/dashboardAdmin', [AdminController::class, 'index'])->name('dashboard.admin');
+    Route::get('/kelolauser', [KelolaUserController::class, 'index'])->name('kelolauser');
+    Route::get('/users/create', [KelolaUserController::class, 'create'])->name('kelolauser.tambah');
+    Route::post('/users/store', [KelolaUserController::class, 'store'])->name('kelolauser.store');
+    Route::get('/users/{id}/edit', [KelolaUserController::class, 'edit'])->name('kelolauser.edit');
+    Route::put('/users/{id}', [KelolaUserController::class, 'update'])->name('kelolauser.update');
+    Route::delete('/hapususer/{id}', [KelolaUserController::class, 'destroy'])->name('kelolauser.hapus');
 });
