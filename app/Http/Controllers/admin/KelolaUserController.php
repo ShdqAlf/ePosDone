@@ -12,8 +12,11 @@ class KelolaUserController extends Controller
     // Menampilkan halaman daftar user
     public function index()
     {
-        $users = User::all(); // Ambil semua data user
-        return view('admin.kelolauser.kelolauser', compact('users')); // Menampilkan view daftar user
+        $data = [
+            'users' => User::all(),
+            'title' => 'Kelola User',
+        ]; // Ambil semua data user
+        return view('admin.kelolauser.kelolauser', $data); // Menampilkan view daftar user
     }
 
     // Menampilkan form untuk menambahkan user baru
