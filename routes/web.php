@@ -9,7 +9,7 @@ use App\Http\Controllers\admin\KelolaUserController;
 
 
 // Halaman login
-Route::get('/login', [AuthController::class, 'index'])->name('login');
+Route::get('/', [AuthController::class, 'index'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
 
 // Logout

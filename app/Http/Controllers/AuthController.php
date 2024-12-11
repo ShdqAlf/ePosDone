@@ -31,7 +31,18 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
 
-            // Redirect berdasarkan role
+            // Mengecek apakah status user adalah inactive
+            if ($user->status === 'inactive') {
+                // Logout user yang statusnya inactive
+                Auth::logout();
+
+                // Kembalikan error bahwa akun dinonaktifkan
+                return back()->withErrors([
+                    'email' => 'Akun Anda telah dinonaktifkan. Silakan hubungi admin.',
+                ]);
+            }
+
+            // Redirect berdasarkan role jika statusnya aktif
             if ($user->role == 'admin') {
                 return redirect()->intended('/dashboardAdmin'); // Dashboard Admin
             } elseif ($user->role == 'user') {
@@ -45,13 +56,12 @@ class AuthController extends Controller
         ]);
     }
 
-
     /**
      * Menangani proses logout pengguna.
      */
     public function logout()
     {
         Auth::logout();
-        return redirect('/login');
+        return redirect('/');
     }
 }

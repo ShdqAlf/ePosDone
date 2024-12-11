@@ -20,6 +20,8 @@ class UserSeeder extends Seeder
             'name' => 'Admin User',
             'email' => 'admin@example.com',
             'password' => Hash::make('password123'), // pastikan menggunakan hash
+            'full_name' => 'Admin User Full Name',
+            'status' => 'active', // status aktif
             'role' => 'admin', // role admin
         ]);
 
@@ -28,6 +30,8 @@ class UserSeeder extends Seeder
             'name' => 'Regular User',
             'email' => 'user@example.com',
             'password' => Hash::make('password123'), // pastikan menggunakan hash
+            'full_name' => 'Regular User Full Name',
+            'status' => 'active', // status aktif
             'role' => 'user', // role user
         ]);
 
@@ -36,6 +40,8 @@ class UserSeeder extends Seeder
             'name' => 'Another Admin',
             'email' => 'anotheradmin@example.com',
             'password' => Hash::make('password123'), // pastikan menggunakan hash
+            'full_name' => 'Another Admin Full Name',
+            'status' => 'inactive', // status tidak aktif
             'role' => 'admin', // role admin
         ]);
 
@@ -43,6 +49,8 @@ class UserSeeder extends Seeder
             'name' => 'Another User',
             'email' => 'anotheruser@example.com',
             'password' => Hash::make('password123'), // pastikan menggunakan hash
+            'full_name' => 'Another User Full Name',
+            'status' => 'active', // status aktif
             'role' => 'user', // role user
         ]);
     }

@@ -22,25 +22,31 @@ class KelolaUserController extends Controller
         return view('admin.kelolauser.tambahuser'); // Menampilkan form untuk tambah user
     }
 
-    // Menyimpan user baru ke database
     public function store(Request $request)
     {
+        // Validasi input
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
+            'full_name' => 'required|string|max:200', // Validasi full_name
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8|confirmed', // Password harus sesuai konfirmasi
-            'role' => 'required|string', // Misal, admin atau user
+            'role' => 'required|string', // Role harus diisi
+            'status' => 'required|in:active,inactive', // Status harus aktif atau tidak aktif
         ]);
 
+        // Membuat user baru
         $user = new User();
         $user->name = $validatedData['name'];
+        $user->full_name = $validatedData['full_name']; // Menyimpan full_name
         $user->email = $validatedData['email'];
         $user->password = Hash::make($validatedData['password']);
         $user->role = $validatedData['role'];
+        $user->status = $validatedData['status']; // Menyimpan status
         $user->save();
 
-        return redirect()->route('kelolauser')->with('success', 'User berhasil ditambahkan.');
+        return redirect()->route('kelolauser.index')->with('success', 'User berhasil ditambahkan.');
     }
+
 
     // Menampilkan form untuk mengedit user
     public function edit($id)
@@ -49,29 +55,36 @@ class KelolaUserController extends Controller
         return view('admin.kelolauser.edituser', compact('user')); // Menampilkan form edit user
     }
 
-    // Memperbarui data user di database
     public function update(Request $request, $id)
     {
+        // Validasi input
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
+            'full_name' => 'required|string|max:200', // Validasi full_name
             'email' => 'required|email|unique:users,email,' . $id,
             'password' => 'nullable|string|min:8|confirmed', // Password opsional saat update
             'role' => 'required|string',
+            'status' => 'required|in:active,inactive', // Status harus aktif atau tidak aktif
         ]);
 
-        $user = User::findOrFail($id); // Cari user berdasarkan id
+        // Mencari user berdasarkan ID
+        $user = User::findOrFail($id);
         $user->name = $validatedData['name'];
+        $user->full_name = $validatedData['full_name']; // Menyimpan perubahan full_name
         $user->email = $validatedData['email'];
 
-        if ($validatedData['password']) {
+        // Memperbarui password jika ada perubahan
+        if ($request->filled('password')) {
             $user->password = Hash::make($validatedData['password']); // Update password jika diubah
         }
 
         $user->role = $validatedData['role'];
+        $user->status = $validatedData['status']; // Menyimpan perubahan status
         $user->save();
 
-        return redirect()->route('kelolauser')->with('success', 'User berhasil diperbarui.');
+        return redirect()->route('kelolauser.index')->with('success', 'User berhasil diperbarui.');
     }
+
 
     // Menghapus user dari database
     public function destroy($id)
