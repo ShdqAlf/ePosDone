@@ -1,72 +1,84 @@
-<nav class="main-nav--bg">
-    <div class="main-nav">
-        <div class="main-nav-start">
-            <button class="sidebar-toggle transparent-btn" title="Menu" type="button">
-                <span class="sr-only">Toggle menu</span>
-                <span class="icon" aria-hidden="true">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
-                        fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd"
-                            d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
-                    </svg>
-                </span>
-            </button>
+<nav class="navbar">
+    <div class="navbar-content">
+        <div>
+            <h1 class="page-title-nav">{{ $title }}</h1>
         </div>
-        <div class="main-nav-end">
-            <button class="sidebar-toggle transparent-btn" title="Menu" type="button">
-                <span class="sr-only">Toggle menu</span>
-                <span class="icon menu-toggle--gray" aria-hidden="true"></span>
-            </button>
-            <div class="notification-wrapper">
-                <button class="gray-circle-btn dropdown-btn" title="To messages" type="button">
-                    <span class="sr-only">To messages</span>
-                    <span class="icon notification active" aria-hidden="true">
-                        <img src="{{ asset('assets/img/svg/Bulk/Notification-gray.svg') }}" alt="">
-                    </span>
-                </button>
-                <ul class="users-item-dropdown notification-dropdown dropdown">
-                    <li>
-                        <a href="##">
-                            <div class="notification-dropdown-icon info">
-                                <i data-feather="check"></i>
+
+        <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="notificationDropdown" role="button"
+                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i data-feather="bell"></i>
+                    <div class="indicator">
+                        <div class="circle"></div>
+                    </div>
+                </a>
+                <div class="dropdown-menu p-0" aria-labelledby="notificationDropdown">
+                    <div class="px-3 py-2 d-flex align-items-center justify-content-between border-bottom">
+                        <p>7 Notifikasi Baru</p>
+                        <a href="javascript:;" class="text-secondary">Bersihkan</a>
+                    </div>
+                    <div class="p-1">
+                        <a href="javascript:;" class="dropdown-item d-flex align-items-center py-2">
+                            <div
+                                class="w-30px h-30px d-flex align-items-center justify-content-center bg-primary rounded-circle me-3">
+                                <i class="icon-sm text-white" data-feather="box"></i>
                             </div>
-                            <div class="notification-dropdown-text">
-                                <span class="notification-dropdown__title">Notifikasi Sukses</span>
-                                <span class="notification-dropdown__subtitle">
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem, ea.
-                                </span>
+                            <div class="flex-grow-1 me-2">
+                                <p>Produk Baru di Tambahkan</p>
+                                <p class="fs-12px text-secondary">30 menit lalu</p>
                             </div>
                         </a>
-                    </li>
-                    <li>
-                        <a class="link-to-page" href="##">Ke Halaman Notifikasi</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="nav-user-wrapper">
-                <button href="##" class="nav-user-btn dropdown-btn" title="My profile"
-                    type="button">
-                    <span class="sr-only">Profile</span>
-                    <span class="nav-user-img">
-                        <picture>
-                            <source srcset="{{ asset('assets/img/avatar/avatar-illustrated-03.webp') }}"
-                                type="image/webp">
-                            <img src="{{ asset('assets/img/avatar/avatar-illustrated-03.png') }}" alt="User name"
-                                style="width: 100%; height: 100%; object-fit: cover;">
-                        </picture>
-                    </span>
-                </button>
-                <ul class="users-item-dropdown nav-user-dropdown dropdown">
-                    <li><a href="##">
-                            <i data-feather="user" aria-hidden="true"></i>
-                            <span>Profile</span>
-                        </a></li>
-                    <li><a class="danger" href="##">
-                            <i data-feather="log-out" aria-hidden="true"></i>
-                            <span>Keluar</span>
-                        </a></li>
-                </ul>
-            </div>
-        </div>
+                    </div>
+                    <div class="px-3 py-2 d-flex align-items-center justify-content-center border-top">
+                        <a href="javascript:;">Lihat Semua</a>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
+                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img class="w-30px h-30px ms-1 rounded-circle" src="https://via.placeholder.com/30x30"
+                        alt="profile">
+                </a>
+                <div class="dropdown-menu p-0" aria-labelledby="profileDropdown">
+                    <div class="d-flex flex-column align-items-center border-bottom px-5 py-3">
+                        <div class="mb-3">
+                            <img class="w-80px h-80px rounded-circle" src="https://via.placeholder.com/80x80"
+                                alt="">
+                        </div>
+                        <div class="text-center">
+                            <p class="fs-16px fw-bolder">Ubed Kontol</p>
+                            <p class="fs-12px text-secondary">ubedkontol@gmail.com</p>
+                        </div>
+                    </div>
+                    <ul class="list-unstyled p-1">
+                        <li class="dropdown-item py-2">
+                            <a href="javascript:;" class="text-body ms-0">
+                                <i class="me-2 icon-md" data-feather="edit"></i>
+                                <span>Edit Profil</span>
+                            </a>
+                        </li>
+                        <li class="dropdown-item py-2">
+                            <a href="javascript:;" class="text-body ms-0">
+                                <i class="me-2 icon-md" data-feather="repeat"></i>
+                                <span>Ganti Akun</span>
+                            </a>
+                        </li>
+                        <li class="dropdown-item py-2">
+                            <a href="javascript:;" class="text-body ms-0">
+                                <i class="me-2 icon-md" data-feather="log-out"></i>
+                                <span>Log Out</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+
+        <a href="#" class="sidebar-toggler">
+            <i data-feather="menu"></i>
+        </a>
+
     </div>
 </nav>
