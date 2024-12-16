@@ -9,92 +9,107 @@ use Illuminate\Support\Facades\Hash;
 
 class KelolaUserController extends Controller
 {
-    // Menampilkan halaman daftar user
     public function index()
     {
         $data = [
             'users' => User::all(),
             'title' => 'Kelola User',
-        ]; // Ambil semua data user
-        return view('admin.kelolauser.kelolauser', $data); // Menampilkan view daftar user
+        ];
+        return view('admin.kelolauser.kelolauser', $data);
     }
 
-    // Menampilkan form untuk menambahkan user baru
+    // public function index()
+    // {
+    //     $users = User::all();
+    //     return response()->json([
+    //         'status' => 'success',
+    //         'data' => $users,
+    //     ]);
+    // }
+
     public function create()
     {
-        return view('admin.kelolauser.tambahuser'); // Menampilkan form untuk tambah user
+        return view('admin.kelolauser.tambahuser');
     }
 
     public function store(Request $request)
     {
-        // Validasi input
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'full_name' => 'required|string|max:200', // Validasi full_name
+            'full_name' => 'required|string|max:200',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:8|confirmed', // Password harus sesuai konfirmasi
-            'role' => 'required|string', // Role harus diisi
-            'status' => 'required|in:active,inactive', // Status harus aktif atau tidak aktif
+            'password' => 'required|string|min:8|confirmed',
+            'role' => 'required|string',
+            'status' => 'required|in:active,inactive',
         ]);
 
-        // Membuat user baru
         $user = new User();
         $user->name = $validatedData['name'];
-        $user->full_name = $validatedData['full_name']; // Menyimpan full_name
+        $user->full_name = $validatedData['full_name'];
         $user->email = $validatedData['email'];
         $user->password = Hash::make($validatedData['password']);
         $user->role = $validatedData['role'];
-        $user->status = $validatedData['status']; // Menyimpan status
+        $user->status = $validatedData['status'];
         $user->save();
 
-        return redirect()->route('kelolauser.index')->with('success', 'User berhasil ditambahkan.');
+        return response()->json([
+            'status' => 'success',
+            'message' => 'User berhasil ditambahkan.',
+            'data' => $user,
+        ]);
+
+        // return redirect()->route('kelolauser')->with('success', 'User berhasil ditambahkan.');
     }
 
-
-    // Menampilkan form untuk mengedit user
     public function edit($id)
     {
-        $user = User::findOrFail($id); // Cari user berdasarkan id
-        return view('admin.kelolauser.edituser', compact('user')); // Menampilkan form edit user
+        $user = User::findOrFail($id);
+        return view('admin.kelolauser.edituser', compact('user'));
     }
 
     public function update(Request $request, $id)
     {
-        // Validasi input
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'full_name' => 'required|string|max:200', // Validasi full_name
+            'full_name' => 'required|string|max:200',
             'email' => 'required|email|unique:users,email,' . $id,
-            'password' => 'nullable|string|min:8|confirmed', // Password opsional saat update
+            'password' => 'nullable|string|min:8|confirmed',
             'role' => 'required|string',
-            'status' => 'required|in:active,inactive', // Status harus aktif atau tidak aktif
+            'status' => 'required|in:active,inactive',
         ]);
 
-        // Mencari user berdasarkan ID
         $user = User::findOrFail($id);
         $user->name = $validatedData['name'];
-        $user->full_name = $validatedData['full_name']; // Menyimpan perubahan full_name
+        $user->full_name = $validatedData['full_name'];
         $user->email = $validatedData['email'];
 
-        // Memperbarui password jika ada perubahan
         if ($request->filled('password')) {
-            $user->password = Hash::make($validatedData['password']); // Update password jika diubah
+            $user->password = Hash::make($validatedData['password']);
         }
 
         $user->role = $validatedData['role'];
-        $user->status = $validatedData['status']; // Menyimpan perubahan status
+        $user->status = $validatedData['status'];
         $user->save();
 
-        return redirect()->route('kelolauser.index')->with('success', 'User berhasil diperbarui.');
+        return response()->json([
+            'status' => 'success',
+            'message' => 'User berhasil diperbarui.',
+            'data' => $user,
+        ]);
+
+        // return redirect()->route('kelolauser.index')->with('success', 'User berhasil diperbarui.');
     }
 
-
-    // Menghapus user dari database
     public function destroy($id)
     {
-        $user = User::findOrFail($id); // Cari user berdasarkan id
+        $user = User::findOrFail($id);
         $user->delete();
 
-        return redirect()->route('kelolauser')->with('success', 'User berhasil dihapus.');
+        return response()->json([
+            'status' => 'success',
+            'message' => 'User berhasil dihapus.',
+        ]);
+
+        // return redirect()->route('kelolauser')->with('success', 'User berhasil dihapus.');
     }
 }
