@@ -10,11 +10,6 @@ use Illuminate\Http\Request;
 
 class KelolaBarangController extends Controller
 {
-    /**
-     * Menampilkan semua barang.
-     *
-     * @return \Illuminate\View\View
-     */
     public function index()
     {
         // Mengambil semua data barang yang ada di database
@@ -23,11 +18,6 @@ class KelolaBarangController extends Controller
         return view('admin.kelolabarang.kelolabarang', compact('barangs'));
     }
 
-    /**
-     * Menampilkan form untuk menambah barang baru.
-     *
-     * @return \Illuminate\View\View
-     */
     public function create()
     {
         // Mengambil data kategori dan supplier untuk pilihan pada form
@@ -37,12 +27,6 @@ class KelolaBarangController extends Controller
         return view('admin.kelolabarang.tambahbarang', compact('kategoris', 'suppliers'));
     }
 
-    /**
-     * Menyimpan barang baru ke database.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function store(Request $request)
     {
         // Validasi input dari form
@@ -56,19 +40,15 @@ class KelolaBarangController extends Controller
             'stok_terkini' => 'required|integer',
         ]);
 
-        // Membuat dan menyimpan barang baru
-        Barang::create($validatedData);
+        $barang = Barang::create($validatedData);
 
-        // Redirect setelah barang berhasil ditambahkan
-        return redirect()->route('barang')->with('success', 'Barang berhasil ditambahkan.');
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Barang berhasil ditambahkan.',
+            'data' => $barang
+        ]);
     }
 
-    /**
-     * Menampilkan form untuk mengedit barang.
-     *
-     * @param  int  $id
-     * @return \Illuminate\View\View
-     */
     public function edit($id)
     {
         // Mengambil barang berdasarkan ID
@@ -80,13 +60,6 @@ class KelolaBarangController extends Controller
         return view('admin.kelolabarang.editbarang', compact('barang', 'kategoris', 'suppliers'));
     }
 
-    /**
-     * Memperbarui data barang di database.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function update(Request $request, $id)
     {
         // Validasi input dari form
@@ -106,16 +79,13 @@ class KelolaBarangController extends Controller
         // Mengupdate data barang
         $barang->update($validatedData);
 
-        // Redirect setelah barang berhasil diperbarui
-        return redirect()->route('barang')->with('success', 'Barang berhasil diperbarui.');
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Barang berhasil diperbarui.',
+            'data' => $barang
+        ]);
     }
 
-    /**
-     * Menghapus barang dari database.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function destroy($id)
     {
         // Mengambil barang berdasarkan ID
@@ -125,6 +95,10 @@ class KelolaBarangController extends Controller
         $barang->delete();
 
         // Redirect setelah barang berhasil dihapus
-        return redirect()->route('barang')->with('success', 'Barang berhasil dihapus.');
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Barang berhasil sihapus.',
+            'data' => $barang
+        ]);
     }
 }

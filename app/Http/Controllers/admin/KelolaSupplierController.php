@@ -34,10 +34,13 @@ class KelolaSupplierController extends Controller
             'email_supplier' => 'required|email|max:150',
         ]);
 
-        // Membuat supplier baru
-        Supplier::create($request->all());
+        $supplier = Supplier::create($request->all());
 
-        return redirect()->route('supplier')->with('success', 'Supplier berhasil ditambahkan.');
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Supplier berhasil ditambahkan.',
+            'data' => $supplier
+        ]);
     }
 
     // Menampilkan form untuk mengedit supplier
@@ -66,7 +69,11 @@ class KelolaSupplierController extends Controller
         // Update data supplier
         $supplier->update($request->all());
 
-        return redirect()->route('supplier')->with('success', 'Supplier berhasil diperbarui.');
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Supplier berhasil diperbarui.',
+            'data' => $supplier
+        ]);
     }
 
     // Menghapus supplier (soft delete)
@@ -78,6 +85,9 @@ class KelolaSupplierController extends Controller
         // Hapus supplier menggunakan soft delete
         $supplier->delete();
 
-        return redirect()->route('supplier')->with('success', 'Supplier berhasil dihapus.');
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Supplier berhasil dihapus.'
+        ]);
     }
 }

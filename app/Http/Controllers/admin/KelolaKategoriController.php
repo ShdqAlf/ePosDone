@@ -30,10 +30,13 @@ class KelolaKategoriController extends Controller
             'deskripsi' => 'nullable|string',
         ]);
 
-        // Menyimpan data kategori
-        KategoriBarang::create($validatedData);
+        $kategori = KategoriBarang::create($validatedData);
 
-        return redirect()->route('kategori')->with('success', 'Kategori berhasil ditambahkan.');
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Kategori berhasil ditambahkan.',
+            'data' => $kategori
+        ]);
     }
 
     // Menampilkan form edit kategori
@@ -55,7 +58,11 @@ class KelolaKategoriController extends Controller
         $kategori = KategoriBarang::findOrFail($id); // Cari kategori berdasarkan ID
         $kategori->update($validatedData); // Update data kategori
 
-        return redirect()->route('kategori')->with('success', 'Kategori berhasil diperbarui.');
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Kategori berhasil diperbarui.',
+            'data' => $kategori
+        ]);
     }
 
     // Menghapus kategori
@@ -64,6 +71,9 @@ class KelolaKategoriController extends Controller
         $kategori = KategoriBarang::findOrFail($id); // Cari kategori berdasarkan ID
         $kategori->delete(); // Soft delete kategori
 
-        return redirect()->route('kategori')->with('success', 'Kategori berhasil dihapus.');
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Kategori berhasil dihapus.'
+        ]);
     }
 }

@@ -18,15 +18,6 @@ class KelolaUserController extends Controller
         return view('admin.kelolauser.kelolauser', $data);
     }
 
-    // public function index()
-    // {
-    //     $users = User::all();
-    //     return response()->json([
-    //         'status' => 'success',
-    //         'data' => $users,
-    //     ]);
-    // }
-
     public function create()
     {
         return view('admin.kelolauser.tambahuser');
@@ -57,8 +48,6 @@ class KelolaUserController extends Controller
             'message' => 'User berhasil ditambahkan.',
             'data' => $user,
         ]);
-
-        // return redirect()->route('kelolauser')->with('success', 'User berhasil ditambahkan.');
     }
 
     public function edit($id)
@@ -96,8 +85,6 @@ class KelolaUserController extends Controller
             'message' => 'User berhasil diperbarui.',
             'data' => $user,
         ]);
-
-        // return redirect()->route('kelolauser.index')->with('success', 'User berhasil diperbarui.');
     }
 
     public function destroy($id)
@@ -109,7 +96,5 @@ class KelolaUserController extends Controller
             'status' => 'success',
             'message' => 'User berhasil dihapus.',
         ]);
-
-        // return redirect()->route('kelolauser')->with('success', 'User berhasil dihapus.');
     }
 }
